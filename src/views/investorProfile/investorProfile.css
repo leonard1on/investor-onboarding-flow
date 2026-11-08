@@ -1,0 +1,10 @@
+.align-left{
+  justify-content: left;
+  text-align: left;
+}
+
+.tooltip-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

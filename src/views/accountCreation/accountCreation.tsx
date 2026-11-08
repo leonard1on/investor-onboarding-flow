@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -12,6 +13,8 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 const AccountCreation  = () => {
+  const navigate = useNavigate();
+
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -52,6 +55,7 @@ const AccountCreation  = () => {
 
     // Handle form submission logic here
     console.log('Form submitted:', { firstName, lastName, email, password });
+    navigate('/investor-profile');
   }
 
   return(
