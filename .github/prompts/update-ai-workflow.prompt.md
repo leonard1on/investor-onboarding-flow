@@ -7,9 +7,9 @@ Analyze our chat history in this session and rewrite `#file:AI_WORKFLOW.md` to r
 
 Ensure it covers:
 1. **Tools**: VS Code + GitHub Copilot Chat.
-2. **Prompts Summary**: Chronological retelling of key prompts used in this session in a summarized format.
+2. **Prompts Summary**: Retelling of key prompts used in this session in a summarized format, without listing every individual prompt use. Mainly a summary of how AI prompts were used in the changes made (not a list).
 3. **Decisions**: What you proposed that I accepted, rejected, or modified, with rationale.
-4. **AI Mistakes/Suboptimal Output**: Concrete instances where code was corrected or refined.
+4. **AI Mistakes/Suboptimal Output**: Concrete instances where code was corrected or refined in a summarized format.
 5. **Code Split**: Estimated ratio of AI-generated vs. hand-written/hand-edited code.
 
 Directly edit `#file:AI_WORKFLOW.md` with the full updated Markdown document.
