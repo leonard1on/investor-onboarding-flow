@@ -61,6 +61,7 @@ const InvestScreen = () => {
                 </CardContent>
               </CardActionArea>
             </Card>
+        </Grid>
           {isLoading && (
             <Typography role="status">Submitting your onboarding information...</Typography>
           )}
@@ -70,7 +71,6 @@ const InvestScreen = () => {
               Could not submit your onboarding information. Please try again.
             </Typography>
           )}
-        </Grid>
       </Grid>
     </Box>
   );

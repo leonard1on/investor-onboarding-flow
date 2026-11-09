@@ -59,8 +59,23 @@ const InvestorProfileWrapper = () => {
     setCurrentStep((step) => Math.max(step - 1, 1));
   }
 
+  const verifyStep = () => {
+    switch(currentStep){
+      case 1: {
+        if(annualHouseholdSelection === 0) return true;
+        break;
+      }
+      case 2: {
+        if(netWorthSelection === 0) return true;
+        break;
+      }
+    }
+    return false;
+  }
+
   return (
     <Container>
+      
       {currentStep === 0 
       ?
         <Interstitial
@@ -85,6 +100,7 @@ const InvestorProfileWrapper = () => {
           <Button
             variant="contained"
             onClick={continueStep}
+            disabled={verifyStep()}
             sx={{ mt: 2}}
             >
               Next
