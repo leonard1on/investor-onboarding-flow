@@ -4,6 +4,8 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 
+import { netWorthOptions } from "../../services/utils";
+
 const NetWorth = ({ value, onChange }: { value: number; onChange: (value: number) => void; }) => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     onChange(Number(event.target.value));
@@ -20,10 +22,14 @@ const NetWorth = ({ value, onChange }: { value: number; onChange: (value: number
           value={value}
           onChange={handleChange}
         >
-          <FormControlLabel value={1} control={<Radio />} label="$0 - $50,000" />
-          <FormControlLabel value={2} control={<Radio />} label="$500,001 - $1,000,000" />
-          <FormControlLabel value={3} control={<Radio />} label="$1,000,001 - $5,000,000" />
-          <FormControlLabel value={4} control={<Radio />} label="$5,000,001+" />
+          {Object.entries(netWorthOptions).map(([optionValue, label]) => (
+            <FormControlLabel
+              key={optionValue}
+              value={Number(optionValue)}
+              control={<Radio />}
+              label={label}
+            />
+          ))}
         </RadioGroup>
       </FormControl>
     </Box>

@@ -4,6 +4,8 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 
+import { annualHouseholdIncomeOptions } from "../../services/utils";
+
 const AnnualHousehold = ({ value, onChange }: { value: number; onChange: (value: number) => void }) => {
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -23,10 +25,14 @@ const AnnualHousehold = ({ value, onChange }: { value: number; onChange: (value:
           value={value}
           onChange={handleChange}
         >
-          <FormControlLabel value={1} control={<Radio />} label="Under $200,000" />
-          <FormControlLabel value={2} control={<Radio />} label="$201,000 - $500,000" />
-          <FormControlLabel value={3} control={<Radio />} label="$501,000 - $1,000,000" />
-          <FormControlLabel value={4} control={<Radio />} label="$1,000,000 +" />
+          {Object.entries(annualHouseholdIncomeOptions).map(([optionValue, label]) => (
+            <FormControlLabel
+              key={optionValue}
+              value={Number(optionValue)}
+              control={<Radio />}
+              label={label}
+            />
+          ))}
         </RadioGroup>
       </FormControl>
     </Box>

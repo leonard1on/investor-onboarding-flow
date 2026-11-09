@@ -8,15 +8,13 @@ import IconButton from "@mui/material/IconButton";
 
 import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
 
-const QualifiedPurchase = ({
-  value,
-  onChange,
-}: {
-  value: number;
-  onChange: (value: number) => void;
-}) => {
+const QualifiedPurchase = ({ value, onChange, }: { value: boolean; onChange: (value: boolean) => void; }) => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    onChange(Number(event.target.value));
+    if (event.target.value === "true") {
+      onChange(true);
+    }else{
+      onChange(false);
+    }
   };
 
   return (
@@ -31,7 +29,7 @@ const QualifiedPurchase = ({
           onChange={handleChange}
         >
           <FormControlLabel 
-            value={1} 
+            value={true} 
             control={<Radio />} 
             label={
               <p className="align-left">
@@ -42,7 +40,7 @@ const QualifiedPurchase = ({
             } 
           />
           <FormControlLabel 
-            value={2} 
+            value={false} 
             control={<Radio />} 
             label={
               <p className="align-left">

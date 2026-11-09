@@ -6,13 +6,7 @@ import InputLabel from "@mui/material/InputLabel";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import Select, { type SelectChangeEvent } from "@mui/material/Select";
 
-const employmentStatuses = [
-  "Employed",
-  "Self-employed",
-  "Retired",
-  "Student",
-  "Not employed"
-];
+import { employmentStatuses } from "../../services/utils";
 
 const EmploymentVerification = ({ value, onChange }: { value: string; onChange: (value: string) => void; }) => {
   const handleChange = (event: SelectChangeEvent<string>) => {

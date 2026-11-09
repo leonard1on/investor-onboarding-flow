@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { setUser } from "../../redux/accountSlice";
+import { store } from "../../redux/store";
 
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -53,8 +55,7 @@ const AccountCreation  = () => {
       return;
     }
 
-    // Handle form submission logic here
-    console.log('Form submitted:', { firstName, lastName, email, password });
+    store.dispatch(setUser({ firstName, lastName, email, password }));
     navigate('/investor-profile');
   }
 

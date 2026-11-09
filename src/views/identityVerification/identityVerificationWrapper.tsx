@@ -1,4 +1,7 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { setIdentityVerification } from "../../redux/accountSlice";
+import { store } from "../../redux/store";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
@@ -10,6 +13,7 @@ import EmploymentVerification from "./employmentVerification";
 
 // import './investorProfile.css';
 const IdentityVerificationWrapper = () => {
+  const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState<number>(0);
 
   const [citizenshipSelection, setCitizenshipSelection] = useState<string[]>([]);
@@ -30,6 +34,17 @@ const IdentityVerificationWrapper = () => {
   };
 
   const continueStep = () => {
+    if (currentStep === 3) {
+      store.dispatch(
+        setIdentityVerification({
+          citizenship: citizenshipSelection,
+          taxResidence: taxResidencSelection,
+          employmentStatus: employmentSelection,
+        }),
+      );
+      navigate("/invest");
+    }
+
     setCurrentStep((step) => Math.min(step + 1, 3));
   }
 
@@ -63,8 +78,7 @@ const IdentityVerificationWrapper = () => {
           <Button
             variant="contained"
             onClick={continueStep}
-            disabled={currentStep === 3}
-            sx={{ mt: 2}}
+            sx={{ mt: 2} }
             >
               Next
           </Button>

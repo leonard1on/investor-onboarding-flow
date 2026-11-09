@@ -26,6 +26,8 @@ Further prompts requested boilerplate for a step-based investor-profile wrapper,
 
 More recent prompts requested basic React and MUI boilerplates for identity verification and navigation. The citizenship view was adjusted to support selecting multiple countries and notify its parent with the selected list. The tax-residence and employment views were scaffolded as controlled MUI dropdowns, and the citizenship list was expanded to include several commonly selected countries including Malta. A basic MUI navbar displaying the WillowWealth brand was also added. Follow-up investigation addressed the MUI out-of-range warning for an initially empty tax-residence selection.
 
+Redux work then connected the onboarding screens to the account slice. A store was created with the account reducer; account creation dispatches user information before navigation. The investor-profile flow reads the saved first name for its welcome interstitial and saves the annual income, net worth, and qualified-purchaser answers to their corresponding slice fields. Shared option maps were added to `src/services/utils.tsx` and reused to display and persist income/net-worth labels. Identity verification similarly saves citizenship, tax residence, and employment status on its final step. A final `investScreen` component reads and logs the user, investor-profile, and identity-verification data from the store, while omitting the password.
+
 The workflow-update prompt was also used to summarize the work in this document.
 
 ## Decisions
@@ -41,6 +43,9 @@ The workflow-update prompt was also used to summarize the work in this document.
 - The identity-verification components follow controlled-component patterns: citizenship sends a `string[]` of selected countries, while the tax-residence and employment dropdowns use single selections. The employment options reflect the suggested common statuses. The country list was intentionally kept static and expanded with a small set of common countries, including Malta.
 - The navbar was kept as a minimal MUI component with the WillowWealth wordmark rather than adding navigation links not requested.
 - For the tax-residence empty-value warning, the select received an explicit empty placeholder option; the user asked to address this directly without requiring a build.
+- Redux Toolkit's `configureStore` was used to register the account slice and expose store types. `store.dispatch` and `store.getState()` were chosen for writing and one-time reading because the user only needed the store and did not need components to reactively update. `react-redux`, `useSelector`, and a `<Provider>` were discussed but not added.
+- Account creation saves the user fields before navigating. Investor-profile answers are converted from numeric radio values to the labels in shared option maps and saved in their matching slice fields. The identity-verification final action saves all three selected answers in one action.
+- The final invest-screen scaffold logs all three reducer sections for inspection, but excludes the user's password from console output.
 
 ## AI Mistakes and Refinements
 
@@ -53,11 +58,16 @@ The workflow-update prompt was also used to summarize the work in this document.
 - An initial tax-residence implementation had an inconsistent controlled-value contract: it was treated as a single select in the component while its parent provided an empty string array, and earlier option values were numeric. This could produce MUI's out-of-range warning. The prop and parent state were aligned to a single string country value, then an empty placeholder option was added for the initial value.
 - The target for a later request to match the citizenship-verification boilerplate was ambiguous. Rather than guessing between tax residence and employment, the assistant asked which view was intended; the user selected employment.
 - The first employment-view boilerplate kept the existing numeric prop contract and used numeric menu values, while later tax-residence selection work used string country names. These are separate single-select data models, but callers must keep their selected value types consistent with the menu options.
+- The initial investor-profile conversion helper functions were not the requested representation. After clarification, they were replaced by explicit number-to-label maps (for example, key `1` maps to `"Under $200,000"`), and the radio options and slice-save logic were updated to use those maps.
+- A reactive Redux selector was initially suggested for reading the first name, but the user clarified that a one-time store read was sufficient. The implementation uses `store.getState()`; React-Redux hooks/provider are unnecessary for this current read-only need.
+- Identity-verification data was first only logged during earlier iteration. It was subsequently changed to dispatch `setIdentityVerification` on the final screen action, with the final button enabled and relabeled "Save".
 
 ## Estimated Code Split
 
 Based on the available conversation, the initial component scaffold and submit guard were AI-generated. The form fields and later validation UI appear to have been developed or edited after those changes. An approximate split for the account-creation work is **20% AI-generated and 80% hand-written or hand-edited**. This is an estimate based on conversation history, not a line-by-line authorship audit.
 
-For the later investor-profile and interstitial work, Copilot generated the boilerplate scaffolds, while the application logic and all subsequent changes were done by hand. Exact line-by-line authorship is unavailable, so the overall authorship split cannot be determined reliably.
+For the later investor-profile and interstitial work, Copilot generated the boilerplate scaffolds based on already created work done by hand beforhand, while the application logic and all subsequent changes were done by hand. Exact line-by-line authorship is unavailable, so the overall authorship split cannot be determined reliably.
 
 The identity-verification views and navbar were also created or substantially scaffolded from prompts. The citizenship list expansion and details such as the employment options and dropdown placeholder were AI-edited in response to user requirements. Based on this conversation alone, these newer component changes are estimated to be **85% AI-generated and 15% hand-written/hand-edited**; this is approximate and does not account for edits made outside the chat.
+
+The store setup, slice dispatch wiring, shared option maps, and invest-screen logging scaffold were generated and iterated from prompts. The user clarified the preferred simple store access and number-to-label map structure. An approximate authorship estimate for this Redux integration and its related screen changes is **85% AI-generated and 15% hand-written/hand-edited**, based only on the visible conversation.

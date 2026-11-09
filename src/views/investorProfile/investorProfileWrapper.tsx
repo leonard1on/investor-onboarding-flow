@@ -1,5 +1,12 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { store } from "../../redux/store";
+import { setInvestorProfile } from "../../redux/accountSlice";
+import {
+  annualHouseholdIncomeOptions,
+  netWorthOptions,
+} from "../../services/utils";
+
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
@@ -12,11 +19,12 @@ import QualifiedPurchase from "./qualifiedPurchase";
 import './investorProfile.css';
 const InvestorProfileWrapper = () => {
   const navigate = useNavigate();
+  const firstName = store.getState().account.user.firstName;
   const [currentStep, setCurrentStep] = useState<number>(0);
 
   const [annualHouseholdSelection, setAnnualHouseholdSelection] = useState<number>(0);
   const [netWorthSelection, setNetWorthSelection] = useState<number>(0);
-  const [qualifiedPurchaseSelection, setQualifiedPurchaseSelection] = useState<number>(0);
+  const [qualifiedPurchaseSelection, setQualifiedPurchaseSelection] = useState<boolean>(false);
   
   const renderStep = () => {
     switch (currentStep) {
@@ -33,7 +41,13 @@ const InvestorProfileWrapper = () => {
 
   const continueStep = () => {
     if(currentStep === 3) {
+      store.dispatch(setInvestorProfile({
+        annualHouseholdIncome: annualHouseholdIncomeOptions[annualHouseholdSelection] ?? "",
+        netWorth: netWorthOptions[netWorthSelection] ?? "",
+        qualifiedPurchase: qualifiedPurchaseSelection,
+      }));
       navigate('/identity-verification');
+      return;
     }
     setCurrentStep((step) => Math.min(step + 1, 3));
   }
@@ -49,7 +63,7 @@ const InvestorProfileWrapper = () => {
         <Interstitial
           open={currentStep === 0}
           onClose={continueStep}
-          title="Welcome to WillowWealth"
+          title={`Welcome to WillowWealth, ${firstName}`}
           description="Let's begin setting up your individual account. Next, we'll ask a few quick questions to better understand your investor profile."
         />
       :
