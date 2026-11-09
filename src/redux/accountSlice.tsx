@@ -1,6 +1,6 @@
 import {createSlice, type PayloadAction} from '@reduxjs/toolkit';
 
-interface AccountState {
+export interface AccountState {
   user:{
     firstName: string;
     lastName: string;

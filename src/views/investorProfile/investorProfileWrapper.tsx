@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { store } from "../../redux/store";
+import { useSelector, useDispatch} from "react-redux";
+import { type RootState } from '../../redux/store';
 import { setInvestorProfile } from "../../redux/accountSlice";
 import {
   annualHouseholdIncomeOptions,
@@ -19,7 +20,9 @@ import QualifiedPurchase from "./qualifiedPurchase";
 import './investorProfile.css';
 const InvestorProfileWrapper = () => {
   const navigate = useNavigate();
-  const firstName = store.getState().account.user.firstName;
+  const dispatch = useDispatch();
+
+  const firstName = useSelector((state: RootState) => state.account.user.firstName);
   const [currentStep, setCurrentStep] = useState<number>(0);
 
   const [annualHouseholdSelection, setAnnualHouseholdSelection] = useState<number>(0);
@@ -41,7 +44,7 @@ const InvestorProfileWrapper = () => {
 
   const continueStep = () => {
     if(currentStep === 3) {
-      store.dispatch(setInvestorProfile({
+      dispatch(setInvestorProfile({
         annualHouseholdIncome: annualHouseholdIncomeOptions[annualHouseholdSelection] ?? "",
         netWorth: netWorthOptions[netWorthSelection] ?? "",
         qualifiedPurchase: qualifiedPurchaseSelection,

@@ -6,15 +6,19 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Grid from "@mui/material/Grid";
-import heroImage from "../../assets/hero.png";
+import heroImage from "../../assets/investment.png"
 
 const Interstitial = ({ open, onClose, title, description }: { open: boolean; onClose: () => void, title: string, description: string}) => {
   return (
     <Dialog open={open} onClose={onClose} aria-describedby="interstitial-dialog-description" sx={{borderRadius: '8px'}}>
       <Box>
-        <Grid container spacing={2} sx={{m: 2, border: '1px solid #ccc', borderRadius: '8px', boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.1)'}}>
-          <Grid size={{xs: 12, sm: 6}}>
-            <img src={heroImage} alt="WillowWealth Logo" style={{ width: '100%', height: 'auto' }} />
+        <Grid container spacing={2} sx={{m: 2, border: '1px solid #ccc', borderRadius: '8px', boxShadow: 3, p:2}}>
+          <Grid size={{xs: 12, sm: 6}} sx={{ display: "flex", minWidth: 0, overflow: "hidden" }}>
+            <img
+              src={heroImage}
+              alt="WillowWealth Logo"
+              style={{ display: "block", width: "100%", height: "100%", objectFit: "contain" }}
+            />
           </Grid>
           <Grid size={{xs: 12, sm: 6}}>
             <DialogTitle>{title}</DialogTitle>
