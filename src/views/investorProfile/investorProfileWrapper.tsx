@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
@@ -10,6 +11,7 @@ import QualifiedPurchase from "./qualifiedPurchase";
 
 import './investorProfile.css';
 const InvestorProfileWrapper = () => {
+  const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState<number>(0);
 
   const [annualHouseholdSelection, setAnnualHouseholdSelection] = useState<number>(0);
@@ -30,6 +32,9 @@ const InvestorProfileWrapper = () => {
   };
 
   const continueStep = () => {
+    if(currentStep === 3) {
+      navigate('/identity-verification');
+    }
     setCurrentStep((step) => Math.min(step + 1, 3));
   }
 
@@ -63,7 +68,6 @@ const InvestorProfileWrapper = () => {
           <Button
             variant="contained"
             onClick={continueStep}
-            disabled={currentStep === 3}
             sx={{ mt: 2}}
             >
               Next
